@@ -1,0 +1,53 @@
+################################################################################
+# default_config.yml:
+#   Contains common config options for the Application
+#   (not needed to be stored in DB)
+#
+#   Source:   http://answerstop.org/question/93679/best-way-to-create-custom-config-options-for-my-rails-app
+#
+#   Loaded to ZT_CONFIG  in:  ./initializers/zt_load_config.rb
+#
+#   Add this file to .gitignore (?)
+#
+#   NB! DO NOT UPDATE THIS FILE FOR DEBUG - use run_config.rb instead
+#
+#   11.10.2016  ZT  Inherited from BKC 95km
+#   30.08.2017  *access_restricted* key is added
+#   22.05.2018  *emulation* key added
+#   04.06.2018  Pattern Constants 
+################################################################################
+
+defaults: &defaults
+
+  access_restricted:  false
+  emulation:          false
+
+  debug:
+    status:           true
+    path:             ''
+
+  mail:
+    bcc:              dummy@gmail.com
+    path:             public/mail/attachments
+
+  # Pattern 
+  equal_percent:      0.05  # Percent (default | 1.0?)         ABS(CL - OP) < (EP/100) * MIN(CL, OP)
+  long_shadow:        2.0   # Factor  (default)                Shadow_Length >= LONG_SHADOW  * Body_Length (default)
+  small_shadow:       1.0   # Factor  (default | 0.5 | 0.75)   Shadow_Length <  SMALL_SHADOW * Body_Length (default or 0.5 | 0.75)
+
+  period:             1.day
+  time_slot:          30.minutes
+  time_slots:         [60, 180, 300, 900, 1800, 3600] # New Candles time slots set (in seconds)
+  
+development:
+  <<: *defaults
+
+  debug:
+    status:           true
+    path:             log/debug.log
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults

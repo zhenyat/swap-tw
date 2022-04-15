@@ -1,0 +1,7 @@
+<footer class="my-5 text-center lg:text-left bg-gray-100 text-gray-600">
+  <div class="flex items-center justify-center p-7">
+    <%= image_tag("logos/ZT_Lab.gif", size: "32x32") + "© #{Time.now.year}" %>
+  </div>
+  <%= render 'shared/debug' if ZT_DEBUG %>
+
+</footer>
