@@ -1,0 +1,25 @@
+<div id="<%%= dom_id <%= singular_name %> %>">
+  <div class="flex flex-col">
+    <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+      <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+        <div class="overflow-hidden">
+          <table class="min-w-full">
+            <tbody>
+              <%% visible_attributes = @<%= singular_table_name %>.attributes.reject {|k, v| k == "password_digest" or k == "created_at" or k == "updated_at"} %>
+              <%% visible_attributes.each_with_index do |(key, value), index| %>
+                <%% if index.even? %>
+                  <tr class="bg-gray-100 border-b">
+                <%% else %>
+                  <tr class="bg-white border-b">
+                <%% end %>
+                  <td><%%= key.capitalize %></td>
+                  <td class="font-mono"><%%= value %></td>
+                </tr>
+              <%% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

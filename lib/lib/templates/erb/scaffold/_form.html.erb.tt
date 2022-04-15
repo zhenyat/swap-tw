@@ -1,0 +1,47 @@
+<%#####################################-%>
+<%# Form Template: Rails 7 & Tailwind  -%>
+<%# 13.04.2022  ZT                     -%>
+<%#####################################-%>
+<%%= form_with(model: <%= singular_table_name %>) do |form| %>
+  <%% if <%= singular_table_name %>.errors.any? %> 
+    <div style="color: red">
+      <h2><%%= pluralize(<%= singular_table_name %>.errors.count, "error") %> prohibited this <%= singular_table_name %> from being saved:</h2>
+      <ul>
+        <%% <%= singular_table_name %>.errors.each do |error| %>
+          <li><%%= error.full_message %></li>
+        <%% end %>
+      </ul>
+    </div>
+  <%% end %>
+
+<% attributes.each do |attribute| -%>
+<% if attribute.password_digest? -%>
+  <div class="flex flex-col mb-4">
+    <%%= form.label :password, style: "display: block" %>
+    <%%= form.password_field :password %>
+  </div>
+  <div>
+    <%%= form.label :password_confirmation, style: "display: block" %>
+    <%%= form.password_field :password_confirmation %>
+<% elsif attribute.column_name == "status" -%>
+  <div class="flex flex-col mb-4">
+    <%%= form.label :status %>
+    <%%= form.select :status, options_for_select(<%=human_name %>.statuses.map {|key, value| [key.titleize, Coin.statuses.key(value)]}, @coin.status), class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+  </div>
+<% elsif attribute.attachments? -%>
+  <div class="flex flex-col mb-4">
+    <%%= form.label :<%= attribute.column_name %>, style: "display: block" %>
+    <%%= form.<%= attribute.field_type %> :<%= attribute.column_name %>, multiple: true %>
+  </div>
+<% else -%>
+  <div class="flex flex-col mb-4">
+    <%%= form.label :<%= attribute.column_name %>, style: "display: block" %>
+    <%%= form.<%= attribute.field_type %> :<%= attribute.column_name %> %>
+  </div>
+<% end -%>
+
+<% end -%>
+  <div class="inline">
+    <%%= form.submit class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+  </div>
+<%% end %>

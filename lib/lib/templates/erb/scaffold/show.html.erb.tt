@@ -1,0 +1,14 @@
+<%#####################################-%>
+<%# View Template: Rails 7 & Tailwind -%>
+<%# 13.04.2022  ZT                     -%>
+<%#####################################-%>
+<div class="w-full">
+  <p style="color: green"><%%= notice %></p>
+
+  <h1 class="font-bold text-4xl"><%= human_name %></h1>
+  <%%= render @<%= singular_table_name %> %>
+
+  <%%= link_to "Edit", <%= edit_helper(type: :path) %>, class: "rounded-lg py-1 px-2 text-yellow-500 bg-yellow-100 inline-block font-bold" %>
+  <%%= link_to "To List", <%= index_helper(type: :path) %>, class: "rounded-lg py-1 px-2 text-blue-500 bg-blue-100 inline-block font-medium" %>
+  <%%= link_to "Destroy", <%= "@#{singular_table_name}" %>, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "rounded-lg py-1 px-2 text-red-500 bg-red-100 font-medium" %>
+</div>

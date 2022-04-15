@@ -1,0 +1,84 @@
+<%#####################################-%>
+<%# Index Template: Rails 7 & Tailwind -%>
+<%# 13.04.2022  ZT                     -%>
+<%#####################################-%>
+<div class="w-full">
+  <%% if notice.present? %>
+    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%%= notice %></p>
+  <%% end %>
+
+  <div class="flex justify-between items-center">
+    <h1 class="font-bold text-4xl"><%= human_name.pluralize %></h1>
+    <%%= link_to "New <%= human_name.downcase %>", <%= new_helper(type: :path) %>, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
+  </div>
+  
+  <%% if @<%= plural_table_name %>.present? %>
+    <div class="flex flex-col">
+      <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+          <div class="overflow-hidden">
+            <table class="min-w-full bg-white">
+              <thead class="bg-gray-300">
+                <tr>
+                  <%% @<%= plural_table_name %>.first.attributes.each do |key, value| %>
+                    <%% unless key == "created_at" or key == "updated_at" %>
+                      <th scope="col" class="text-base font-bold text-gray-900 px-6 py-4 text-left">
+                        <%%= "#{key.titleize}" %>
+                      </th>
+                    <%% end%>
+                  <%% end %>
+                  <%% if <%= human_name %>.reflect_on_attachment(:cover_image).present? %>
+                    <th scope="col" class="text-base font-bold text-gray-900 px-6 py-4 text-left">
+                      Cover
+                    </th>
+                  <%% end %>
+                  <th class="text-base font-bold text-gray-900 px-6 py-4 text-left">Actions</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <%% @<%= plural_table_name %>.each do |<%= singular_table_name %>| %>
+                  <%% if <%= singular_table_name %>.id.even? %>
+                    <tr class="bg-gray-100 border-b">
+                  <%% else %>
+                    <tr class="bg-white border-b">
+                  <%% end %>
+                    <%% <%= singular_table_name %>.attributes.each do |key, value| %>
+                      <%% unless key == "created_at" || key == "updated_at" %>
+                        <%% if key == "status" %>
+                          <%% if <%= singular_table_name %>.active? %>
+                            <td class="text-sm text-green-500 font-light px-6 py-4 whitespace-nowrap">
+                          <%% else %>
+                            <td class="text-sm text-red-800 font-light px-6 py-4 whitespace-nowrap">
+                          <%% end %>
+                              <%%= value %>
+                            </td>    
+                        <%% else %>
+                          <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                            <%%= value %>
+                          </td>
+                        <%% end %>
+                      <%% end %>
+                    <%% end %>
+                    <%% if <%= human_name %>.reflect_on_attachment(:cover_image).present? %>
+                      <td  class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        <%% if <%= singular_table_name %>.cover_image.attached? %>
+                          <%%= image_tag <%= singular_table_name %>.cover_image.variant(resize_to_limit: [30, 30]) %>
+                        <%% end %>
+                      </td>
+                    <%% end %>
+                    <td>
+                      <%%= link_to "Show", <%= singular_table_name %>, class: "rounded-lg py-1 px-2 text-blue-500 bg-blue-100 inline-block font-medium" %>
+                      <%%= link_to "Edit", <%= "edit_#{singular_table_name}_path(#{singular_table_name})" %>, class: "rounded-lg py-1 px-2 text-yellow-500 bg-yellow-100 inline-block font-bold" %>
+                      <%%= link_to "Destroy", <%= singular_table_name %>, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "rounded-lg py-1 px-2 text-red-500 bg-red-100 font-medium" %>
+                    </td>
+                  </tr>
+                <%% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  <%% end %>
+</div>
