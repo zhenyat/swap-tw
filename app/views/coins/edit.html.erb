@@ -1,0 +1,8 @@
+<div class="w-full">
+  <h1 class="font-bold text-4xl">Editing coin</h1>
+
+  <%= render "form", coin: @coin %>
+  <br>
+  <%= link_to "Show", @coin, class: "rounded-lg py-1 px-2 text-blue-500 bg-blue-100 inline-block font-medium" %>
+  <%= link_to "To List", coins_path, class: "rounded-lg py-1 px-2 text-gray-500 bg-gray-300 inline-block font-medium" %>
+</div>

@@ -1,0 +1,27 @@
+<% if object.class.name.constantize.reflect_on_attachment(:cover_image).present?  %>
+  <table class="min-w-full">
+    <tbody>
+      <tr class="bg-blue-100 border-b">
+        <td><%= "Cover Image" %><td>
+          <% if object.cover_image.attached? %>
+            <%= image_tag object.cover_image.variant(resize_to_limit: [40, 40]) %>
+          <% end %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+<% end %>
+<% if object.class.name.constantize.reflect_on_attachment(:images).present? and object.images.attached? %>
+  <table class="min-w-full">
+    <tbody>
+      <tr>
+        <td><%= "Images Gallery" %><td>
+        <% object.images.each do |image| %>
+          <td>
+            <%= image_tag image.variant(resize_to_limit: [50, 50]) %>
+          </td>
+        <% end %>
+      </tr>
+    </tbody>
+  </table>
+<% end %>

@@ -1,0 +1,44 @@
+<%= form_with(model: coin, class: "contents") do |form| %>
+  <% if coin.errors.any? %>
+    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
+      <h2><%= pluralize(coin.errors.count, "error") %> prohibited this coin from being saved:</h2>
+
+      <ul>
+        <% coin.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="flex flex-col mb-4">
+    <%= form.label :name %>
+    <%= form.text_field :name, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+  </div>
+
+  <div class="flex flex-col mb-4">
+    <%= form.label :code %>
+    <%= form.text_field :code, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+  </div>
+
+  <div class="flex flex-col mb-4">
+    <%= form.label :kind %>
+    <%= form.select :kind, options_for_select(Coin.kinds.map {|key, value| [key.titleize, Coin.kinds.key(value)]}, @coin.kind), class: "form-select mt-1 block w-full" %>
+  </div>
+
+  <div class="flex flex-col mb-4">
+    <%= form.label :status %>
+    <%= form.select :status, options_for_select(Coin.statuses.map {|key, value| [key.titleize, Coin.statuses.key(value)]}, @coin.status), class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+  </div>
+
+  <div class="flex flex-col mb-4">
+    <%= form.label :cover_image %>
+    <%= form.file_field :cover_image %>
+  </div>
+
+  <%= render 'shared/form_images', f: form, object: coin %>
+
+  <div class="inline">
+    <%= form.submit "Save", class: "rounded-lg py-3 px-3 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+  </div>
+<% end %>

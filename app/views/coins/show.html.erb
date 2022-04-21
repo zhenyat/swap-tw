@@ -1,0 +1,10 @@
+<div class="w-full">
+  <p style="color: green"><%= notice %></p>
+
+  <h1 class="font-bold text-4xl">Coin</h1>
+  <%= render @coin %>
+
+  <%= link_to "Edit", edit_coin_path(@coin), class: "rounded-lg py-1 px-2 text-yellow-500 bg-yellow-100 inline-block font-bold" %>
+  <%= link_to "To List", coins_path, class: "rounded-lg py-1 px-2 text-blue-500 bg-blue-100 inline-block font-medium" %>
+  <%= link_to "Destroy", @coin, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "rounded-lg py-1 px-2 text-red-500 bg-red-100 font-medium" %>
+</div>
